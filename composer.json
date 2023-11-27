@@ -1,0 +1,14 @@
+{
+  "require": {
+    "monolog/monolog": "*",
+    "symfony/serializer": "^6.3",
+    "ext-readline": "*",
+    "symfony/property-access": "^6.3"
+
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\" : "applications/"
+    }
+  }
+}
