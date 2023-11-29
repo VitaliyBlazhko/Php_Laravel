@@ -19,3 +19,5 @@
 [2023-11-27T12:54:59.752757+00:00] validator.INFO: validate number3241414213 [] []
 [2023-11-27T12:56:00.106944+00:00] validator.INFO: validate number3566365464 [] []
 [2023-11-27T12:56:44.486023+00:00] validator.INFO: validate number: 3566365464 [] []
+[2023-11-27T20:29:17.148302+00:00] validator.INFO: validate number:  [] []
+[2023-11-27T20:29:17.149296+00:00] validator.ERROR: don`t validate number:  [] []

@@ -8,13 +8,16 @@
       volumes:
         - ./Docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         - ./:/var/www/html
-      links:
+      depends_on:
         - php
+
     php:
       image: php:8.2-fpm
       working_dir: /var/www/html
       volumes:
         - ./:/var/www/html
+      ports:
+        - "9000:9000"
 
     composer:
       image: composer
