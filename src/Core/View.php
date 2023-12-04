@@ -10,6 +10,7 @@ class View
     {
         $layout = $this->renderLayout();
         $view = $this->renderView($callback, $params);
+//        dd($view);
 
         return str_replace('{{view}}', $view, $layout);
     }
@@ -20,6 +21,7 @@ class View
             $$keyParam = $paramValue;
         }
         ob_start();
+//        dd(self::VIEW_PATH . "{$callback}.php");
         include_once self::VIEW_PATH . "{$callback}.php";
         return ob_get_clean();
     }

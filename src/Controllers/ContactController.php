@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Application;
+use App\Core\ContactInfoDisplayer;
 use App\Core\Route;
 use App\Model\ContactModel;
 
@@ -13,6 +14,7 @@ class ContactController
     {
         $response = ['status' => true];
         return Application::$app->view->render('contact', $response);
+
     }
 
     #[Route('POST', '/contact-save')]
@@ -30,14 +32,11 @@ class ContactController
         return Application::$app->view->render('contact', $response);
     }
 
-
     public function contactShow()
     {
-        $data = Application::$app->request->getBody();
-        $email = $data['email'];
-        $fullName = $data['full_name'];
+        $data = ContactInfoDisplayer::retrieve();
+        return Application::$app->view->render('contact', ['data' => $data]);
 
-        echo 'Email: ' . $email . '<br>';
-        echo 'Full Name: ' . $fullName . '<br>';
     }
+
 }

@@ -16,7 +16,9 @@ class Request
 
     public function getBody()
     {
+
         return $_REQUEST;
+
     }
 
 }

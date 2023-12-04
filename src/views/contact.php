@@ -7,6 +7,7 @@ use App\Libraries\formGenerator\TextInput;
 use App\Libraries\formGenerator\Checkbox;
 use App\Libraries\formGenerator\Button;
 use App\Controllers\ContactController;
+use App\Core\ContactInfoDisplayer;
 
 if ($status): ?>
 
@@ -15,9 +16,9 @@ if ($status): ?>
 
     $formGenerator = new FormGenerator();
 
-    $formGenerator->addElement(new TextInput('email', 'email', 'email'));
-    $formGenerator->addElement(new TextInput('full_name', 'text', 'FullName'));
-    $formGenerator->addElement(new Button('button', 'submit', ''));
+    $formGenerator->addElement(new TextInput('email', 'email', 'email', true));
+    $formGenerator->addElement(new TextInput('full_name', 'text', 'FullName', true));
+    $formGenerator->addElement(new Button('button', 'submit', '', true));
     $formGenerator->generateForm();
 
     ?>
@@ -25,8 +26,9 @@ if ($status): ?>
 
 <?php else:
 
-    $contactShow = new ContactController();
-    $contactShow->contactShow();
+    $data = $params['data'] ?? [];
+//dd($data);
+    echo ContactInfoDisplayer::display($data);
     ?>
 
     <h2> Success</h2>

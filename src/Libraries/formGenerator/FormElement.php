@@ -7,22 +7,23 @@ use App\Libraries\formGenerator\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-    public function __construct(
-        protected string $name,
-        protected string $type,
-        protected string $placeholder,
-        protected bool   $isRequired = false,
-    )
-    {}
+    protected string $name;
+    protected string $type;
+    protected string $placeholder;
+    protected bool $isRequired;
+    protected string $value = '';
+    protected string $errorMessage = '';
 
-    abstract public function render();
-
-
-    public function validate(): bool
+    public function __construct(string $name, string $type, string $placeholder, bool $isRequired, string $value = '', string $errorMessage = '')
     {
-        if($this->isRequired && empty($_POST[$this->name])){
-            return false;
-        }
-        return true;
+        $this->name = $name;
+        $this->type = $type;
+        $this->placeholder = $placeholder;
+        $this->isRequired = $isRequired;
+        $this->value = $value;
+        $this->errorMessage = $errorMessage;
     }
+
+    // Додайте реалізацію методів інтерфейсу
+    // render(), validate(), getName(), getErrorMessage()
 }
