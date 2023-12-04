@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Core\Application;
 use App\Core\Route;
 use App\Model\UserModel;
+use App\Core\Validator;
 
 class RegistrationController
 {
@@ -15,16 +16,21 @@ class RegistrationController
         return Application::$app->view->render('registration_form');
     }
 
+    #[Route('POST', '/register')]
     public function register()
     {
         $data = Application::$app->request->getBody();
+
         $user = new UserModel();
-        // ... (аналогічний код валідації та обробки даних)
+
+        $user->hydrate($data);
+
+        $errors = Validator::validate($user);
+
         if (!empty($errors)) {
-            include_once '../views/registration_form.php';
+            var_dump($errors);
         } else {
-            // Логіка збереження користувача
-            // Потім можна перенаправити користувача на іншу сторінку або відобразити повідомлення про успішну реєстрацію
+            echo 'error';
         }
     }
 }

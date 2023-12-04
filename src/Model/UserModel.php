@@ -1,24 +1,35 @@
 <?php
 
 namespace App\Model;
+
+use App\Core\Application;
+use App\Core\Request;
 use App\Core\ValidationRule;
 
 class UserModel
 {
-    #[ValidationRule('required')]
-    #[ValidationRule('minLength', 2)]
+
+
+    #[ValidationRule(['required' => true, 'minLength' => 2])]
     public string $firstName;
 
-    #[ValidationRule('required')]
-    #[ValidationRule('minLength', 2)]
+    #[ValidationRule(['required' => true, 'minLength' => 2])]
     public string $lastName;
 
-    #[ValidationRule('required')]
-    #[ValidationRule('email')]
+    #[ValidationRule(['required' => true, 'email' => true])]
     public string $email;
 
-    #[ValidationRule('required')]
-    #[ValidationRule('minLength', 6)]
-    #[ValidationRule('password', 6)] // Параметр довжини для пароля
+    #[ValidationRule(['required' => true, 'password' => 6])]
     public string $password;
+
+    public function hydrate(array $data): void
+    {
+
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
+
 }

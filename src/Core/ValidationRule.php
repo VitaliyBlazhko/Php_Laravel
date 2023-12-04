@@ -2,26 +2,46 @@
 
 namespace App\Core;
 
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class ValidationRule
 {
-    public function __construct(private string $rule, private mixed $value = null)
+    public function __construct(private array $rules = [])
     {
     }
 
     public function validate(string $value): bool
     {
-        switch ($this->rule) {
-            case 'required':
-                return !empty($value);
-            case 'minLength':
-                return strlen($value) >= $this->value;
-            case 'email':
-                return filter_var($value, FILTER_VALIDATE_EMAIL);
-            case 'password':
-                return preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{' . $this->value . ',}$/', $value);
-            default:
-                return false;
+        foreach ($this->rules as $rule => $ruleValue) {
+            switch ($rule) {
+                case 'required':
+                    if (empty($value)) {
+                        return false;
+                    }
+                    break;
+                case 'minLength':
+                    if (strlen($value) < $ruleValue) {
+                        return false;
+                    }
+                    break;
+                case 'email':
+                    if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                        return false;
+                    }
+                    break;
+                case 'password':
+                    if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{' . $ruleValue . ',}$/', $value)) {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+            }
         }
+        return true;
     }
 
+    public function getRules(): array
+    {
+        return $this->rules;
+    }
 }
